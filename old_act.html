@@ -1,0 +1,60 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+</head>
+<body>
+<p>
+<h2>Актировки на сегодня (14/02/2017)</h2>
+<ul>
+</ul>
+</p>
+<hr>
+<p><b>Добавить актировку:</b></p>
+<p>
+    <form method="get" action="/akt/add">
+<p>Город: <select name="town">
+    <option value="3466">Нижневартовск</option>
+    <option value="3462">Сургут</option>
+    <option value="3452">Тюмень</option>
+</select></p>
+<p><select name="class">
+    <option value="-1">Удалить актировку</option>
+    <option value="0">В обычном режиме</option>
+    <option value="4">По 4 класс</option>
+    <option value="6">По 6 класс</option>
+    <option value="8">По 8 класс</option>
+    <option value="9">По 9 класс</option>
+    <option value="11">По 11 класс</option>
+</select></p>
+<p><select name="smena">
+    <option value="1">1 смена</option>
+    <option value="2">2 смена</option>
+</select></p>
+<p><input type="submit" value="Отправить"></p>
+</p>
+</body>
+</html>
+
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database(':memory:');
+
+db.serialize(function() {
+
+db.run('CREATE TABLE lorem (info TEXT)');
+var stmt = db.prepare('INSERT INTO lorem VALUES (?)');
+
+for (var i = 0; i < 10; i++) {
+stmt.run('Ipsum ' + i);
+}
+
+stmt.finalize();
+
+db.each('SELECT rowid AS id, info FROM lorem', function(err, row) {
+console.log(row.id + ': ' + row.info);
+});
+});
+
+db.close();
