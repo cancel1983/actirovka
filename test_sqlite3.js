@@ -7,7 +7,7 @@ var db = new sqlite3.Database(mydb);
 
 db.serialize(function() {
 
-    db.run('CREATE TABLE lorem (info TEXT)');
+    //db.run('CREATE TABLE lorem (info TEXT)');
     var stmt = db.prepare('INSERT INTO lorem VALUES (?)');
 
     for (var i = 0; i < 10; i++) {
