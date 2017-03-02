@@ -3,16 +3,14 @@ var router = express.Router();
 var extsql = require('../sqlwork.js');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Актированные дни' });
   var to = req.query.town;
   var cl = req.query.class;
   var sm = req.query.smena;
-  console.log('dfgdsfg');
-  if ((to != NULL)&&(cl != NULL)&&(sm != NULL)){
-    console.log(to,cl,sm);
-    extsql.xxx(to,cl,sm);
+  if ((to != null)&&(cl != null)&&(sm != null)){
+//    console.log(to,cl,sm);
+    extsql.abc(to,cl,sm);
   }
-
+  res.render('index', { title: 'Актированные дни' });
   //console.log(to,cl,sm);
 });
 

@@ -12,19 +12,20 @@ function showdate() {
     var year = dt.getFullYear();
     if (month <= 9) month = '0' + month;
     if (day <= 9) day = '0' + day;
-    var cooldate = year + "." + month + "." +day;
+    var cooldate = year + "." + month + "." + day;
     return cooldate;
 };
-    db.serialize(function xxx(to, cl, sm) {
-        var id = '';
-        //var to = '3465';
+function xxx(to, cl, sm) {
+    console.log("We are in XXX");
+    db.serialize(function () {
         var da = showdate();
-        //var sm = '2';
-        //var cl = '8';
-        if ((to != NULL)&&(cl != NULL)&&(sm != NULL)) {
-            db.run('INSERT INTO aktirovka_days (city, date, smena, class) VALUES (?,?,?,?)', to, da, sm, cl);
+        //console.log(to, cl, sm);
+        if ((to != null) && (cl != null) && (sm != null)) {
+            console.log(showdate());
+            query = db.prepare('INSERT INTO aktirovka_days (city, date, smena, class) VALUES (?,?,?,?)')
+            query.run(to, da, sm, cl);
+            query.finalize();
         }
-        //db.finalize();
         db.each('SELECT * FROM aktirovka_days', function (err, row) {
             /*        if (err)
              {
@@ -34,6 +35,5 @@ function showdate() {
             console.log(row.akt_id + ': ' + row.city + ': ' + row.date + ': ' + row.smena + ': ' + row.class);
         });
     });
-    db.close();
-
-//};
+};
+exports.abc = xxx;
