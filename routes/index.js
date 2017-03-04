@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
   var sm = req.query.smena;
   if ((to != null)&&(cl != null)&&(sm != null)){
 //    console.log(to,cl,sm);
-    extsql.abc(to,cl,sm);
+    extsql.addAct(to,cl,sm);
   }
   res.render('index', { title: 'Актированные дни' });
   //console.log(to,cl,sm);

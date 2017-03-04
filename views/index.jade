@@ -1,6 +1,15 @@
 extends layout
 
 block content
+  - if(data) {
+  table(width='100%', border="1'")
+    for row in data
+      tr
+        td= row.
+  - } else {
+  p NOTHING
+  - }
+
   h1= 'Добавить актировку'
   form(method="get", action="/")
     p Город:

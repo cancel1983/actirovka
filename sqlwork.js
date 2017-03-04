@@ -15,13 +15,13 @@ function showdate() {
     var cooldate = year + "." + month + "." + day;
     return cooldate;
 };
-function xxx(to, cl, sm) {
-    console.log("We are in XXX");
+function addAct(to, cl, sm) {
+    //console.log("We are in XXX");
     db.serialize(function () {
         var da = showdate();
         //console.log(to, cl, sm);
         if ((to != null) && (cl != null) && (sm != null)) {
-            console.log(showdate());
+            //console.log(showdate());
             query = db.prepare('INSERT INTO aktirovka_days (city, date, smena, class) VALUES (?,?,?,?)')
             query.run(to, da, sm, cl);
             query.finalize();
@@ -36,4 +36,4 @@ function xxx(to, cl, sm) {
         });
     });
 };
-exports.abc = xxx;
+exports.addAct = addAct;
