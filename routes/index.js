@@ -9,8 +9,10 @@ router.get('/', function(req, res, next) {
   if ((to != null)&&(cl != null)&&(sm != null)){
 //    console.log(to,cl,sm);
     extsql.addAct(to,cl,sm);
-  }
-  res.render('index', { title: 'Актированные дни' });
+  };
+  var rows = extsql.selectData();
+  console.log(rows);
+  res.render('index', { title: 'Актированные дни',data: rows });
   //console.log(to,cl,sm);
 });
 

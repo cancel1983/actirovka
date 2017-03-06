@@ -34,6 +34,18 @@ function addAct(to, cl, sm) {
              else*/
             console.log(row.akt_id + ': ' + row.city + ': ' + row.date + ': ' + row.smena + ': ' + row.class);
         });
+        return rows;
     });
 };
+function selectData() {
+    db.serialize(function () {
+        db.run('SELECT * FROM aktirovka_days', function (err, row) {
+            console.log(row);
+            //return rows;
+
+        });
+    });
+}
 exports.addAct = addAct;
+exports.selectData = selectData;
+//exports.row = addAct.row;
