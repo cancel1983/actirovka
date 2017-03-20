@@ -1,16 +1,19 @@
 extends layout
-
 block content
-  - if(data) {
-  table(width='100%', border="1'")
-    for row in data
-      tr
-        td= row.akt_id
-  - } else {
-  p NOTHING
-  - }
-
   h1= 'Добавить актировку'
+
+  mixin printData(data)
+    table(width='100%', border="1'")
+      - each row in data
+          tr
+            td= row.akt_id
+            td= row.city
+            td= row.date
+            td= row.smena
+            td= row.class
+
+  +printData(data)
+
   form(method="get", action="/")
     p Город:
     select(name="town")

@@ -15,37 +15,42 @@ function showdate() {
     var cooldate = year + "." + month + "." + day;
     return cooldate;
 };
-function addAct(to, cl, sm) {
-    //console.log("We are in XXX");
-    db.serialize(function () {
-        var da = showdate();
-        //console.log(to, cl, sm);
-        if ((to != null) && (cl != null) && (sm != null)) {
-            //console.log(showdate());
-            query = db.prepare('INSERT INTO aktirovka_days (city, date, smena, class) VALUES (?,?,?,?)')
-            query.run(to, da, sm, cl);
-            query.finalize();
-        }
-        db.each('SELECT * FROM aktirovka_days', function (err, row) {
-            /*        if (err)
-             {
-             res.render('index');
-             }
-             else*/
-            console.log(row.akt_id + ': ' + row.city + ': ' + row.date + ': ' + row.smena + ': ' + row.class);
+function addAct(to, cl, sm, callback) {
+    // console.log("We are in XXX");
+    if (cl != -1) {
+        db.serialize(function () {
+            var da = showdate();
+            // console.log(to, cl, sm);
+            if ((to != null) && (cl != null) && (sm != null)) {
+                //console.log(showdate());
+                query = db.prepare('INSERT INTO aktirovka_days (city, date, smena, class) VALUES (?,?,?,?)')
+                query.run(to, da, sm, cl);
+                query.finalize();
+            }
+            /*        db.each('SELECT * FROM aktirovka_days', function (err, row) {
+             console.log(row.akt_id + ': ' + row.city + ': ' + row.date + ': ' + row.smena + ': ' + row.class);
+             });
+             */
+            callback();
         });
-        return rows;
-    });
-};
-function selectData() {
-    db.serialize(function () {
-        db.run('SELECT * FROM aktirovka_days', function (err, row) {
-            console.log(row);
-            //return rows;
+    } else {
+        db.serialize(function () {
+            db.all('DELETE FROM aktirovka_days WHERE (city = ?)AND(smena=?)',[to,sm], function (err, rows) {
+            })
+        });
+        callback();
+    }
+}
 
+function selectData(res) {
+    db.serialize(function () {
+        db.all('SELECT * FROM aktirovka_days WHERE class <> "-1"', function (err, rows) {
+            //console.log(rows);
+            res.render('index', { title: 'Актированные дни',data: rows });
         });
     });
 }
 exports.addAct = addAct;
 exports.selectData = selectData;
+//selectData();
 //exports.row = addAct.row;

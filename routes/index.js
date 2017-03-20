@@ -6,13 +6,17 @@ router.get('/', function(req, res, next) {
   var to = req.query.town;
   var cl = req.query.class;
   var sm = req.query.smena;
+  // console.log(to, cl, sm);
   if ((to != null)&&(cl != null)&&(sm != null)){
 //    console.log(to,cl,sm);
-    extsql.addAct(to,cl,sm);
+    extsql.addAct(to,cl,sm, function () {
+      extsql.selectData(res);
+    });
+  } else {
+    extsql.selectData(res);
   };
-  var rows = extsql.selectData();
-  console.log(rows);
-  res.render('index', { title: 'Актированные дни',data: rows });
+  //console.log(rows);
+  //res.render('index', { title: 'Актированные дни',data: rows });
   //console.log(to,cl,sm);
 });
 
